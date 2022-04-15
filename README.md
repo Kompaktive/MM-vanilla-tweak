@@ -1,8 +1,8 @@
 # Motorsport Manager Vanilla Tweak
 Motorsport Manager Vanilla Tweak
-## Change Log
+## List of Modified Classes
 <details>
-  <summary><b>CarPartStats</b></summary>
+  <summary><h3>CarPartStats</h3></summary>
   <p>
     #### weightStrippedReliabilityMin
     ##### BEFORE
