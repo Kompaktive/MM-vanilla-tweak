@@ -15,3 +15,19 @@ Motorsport Manager Vanilla Tweak
     public const float weightStrippedReliabilityMin = 0.7f;
     ```
 </details>
+
+<details>
+  <summary><h3>PathData</h3></summary>
+  
+  * #### CalculateLockUpZones()
+    Affects how long in meters(?) the straight path is to enable the lock up zones. The default value is <code>400f</code> so if the straight path is less than 400 meters(?) then the lock up zones won't generate which means no driver will lock up in that spot. This mod changes it to <code>200f</code> so more lock up zones can be generated for each end of the straight path.
+    ###### (?) = need confirmation
+    ##### DEFAULT VALUE
+    ```c#
+    float num = 400f;
+    ```
+    ##### VANILLA TWEAK
+    ```c#
+    float num = 200f;
+    ```
+</details>
