@@ -2,10 +2,12 @@
 Motorsport Manager Vanilla Tweak
 ## Change Log
 * ### CarPartStats
+  #### weightStrippedReliabilityMin
+  ##### BEFORE
   ```c#
-  // before
   public const float weightStrippedReliabilityMin = 0.5f;
-  
-  // after
+  ```
+  ```c#
   public const float weightStrippedReliabilityMin = 0.7f;
   ```
+  
