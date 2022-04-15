@@ -2,7 +2,7 @@
 Motorsport Manager Vanilla Tweak
 ## Change Log
 <details>
-  <summary>### CarPartStats</summary>
+  <summary><b>CarPartStats</b></summary>
   <p>
     #### weightStrippedReliabilityMin
     ##### BEFORE
