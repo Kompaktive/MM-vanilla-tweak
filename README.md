@@ -49,12 +49,14 @@ Motorsport Manager Vanilla Tweak
     float fitnessSkill = (Game.instance.sessionManager.GetNormalizedSessionTime() * 20f) - inVehicle.driver.GetDriverStats().fitness;
     float corneringSkill = 40f - inVehicle.driver.GetDriverStats().cornering - (Game.instance.sessionManager.currentSessionWeather.GetNormalizedTrackRubber() * 20f);
     float adaptabilitySkill = (Game.instance.sessionManager.currentSessionWeather.GetNormalizedTrackWater() * 20f) - inVehicle.driver.GetDriverStats().adaptability;
-    float lockUpChanceThreshold = (brakingSkill + fitnessSkill + adaptabilitySkill + corneringSkill) / 1000000f;
+
+    float minSpeedToTriggerLockUp = inVehicle.driver.GetDriverStats().cornering - (Game.instance.sessionManager.currentSessionWeather.GetNormalizedTrackRubber() * 20f);
+    float lockUpChanceThreshold = (brakingSkill + fitnessSkill + adaptabilitySkill + corneringSkill) / 1000f;
 
     bool isTutorialActiveInCurrentGameState = Game.instance.tutorialSystem.isTutorialActiveInCurrentGameState;
     bool flag = Game.instance.sessionManager.flag == SessionManager.Flag.Chequered;
     bool isLockUpTriggered = RandomUtility.GetRandom01() < lockUpChanceThreshold;
   
-    return inVehicle.speed <= GameUtility.MilesPerHourToMetersPerSecond(50f) && !isTutorialActiveInCurrentGameState && !inVehicle.behaviourManager.isOutOfRace && !flag && isLockUpTriggered && inVehicle.sessionEvents.IsReadyTo(SessionEvents.EventType.LockUp);
+    return inVehicle.speed <= GameUtility.MilesPerHourToMetersPerSecond(minSpeedToTriggerLockUp) && !isTutorialActiveInCurrentGameState && !inVehicle.behaviourManager.isOutOfRace && !flag && isLockUpTriggered;
     ```
 </details>
