@@ -60,4 +60,9 @@ Motorsport Manager Vanilla Tweak
   
     return inVehicle.speed >= GameUtility.MilesPerHourToMetersPerSecond(minSpeedToTriggerLockUp) && !isTutorialActiveInCurrentGameState && !inVehicle.behaviourManager.isOutOfRace && !flag && isLockUpTriggered;
     ```
+    In Vanilla Tweak, the minimum vehicle speed to trigger tyre lock up is changed to be more dynamic, calculated based on driver's braking and cornering skills, track rubber level, and track water level. <code>isReadyTo</code> is removed as well and replaced with <code>isLockUpTriggered</code>. You don't have to worry about the formula, yes it is unreadable I know, however if you want to change the tyre lock up frequency, just change this line
+    ```c#
+    float lockUpChanceThreshold = (brakingSkill + fitnessSkill + adaptabilitySkill + corneringSkill) / 1000f;
+    // change the 1000f to something else. The greater the value the less tyre lock up chance to trigger.
+    ```
 </details>
