@@ -36,13 +36,14 @@ Motorsport Manager Vanilla Tweak
   <summary>TyreLockUpDirector</summary>
   
   * #### IsTyreLockUpViable()
-    Affects -
+    Affects when tyre lock up can trigger to each vehicle. For tyre lock up to happen, the function must return <code>true</code> .
     ##### DEFAULT VALUE
     ```c#
     bool isTutorialActiveInCurrentGameState = Game.instance.tutorialSystem.isTutorialActiveInCurrentGameState;
     bool flag = Game.instance.sessionManager.flag == SessionManager.Flag.Chequered;
     return inVehicle.speed <= GameUtility.MilesPerHourToMetersPerSecond(50f) && !isTutorialActiveInCurrentGameState && !inVehicle.behaviourManager.isOutOfRace && !flag && inVehicle.sessionEvents.IsReadyTo(SessionEvents.EventType.LockUp);
     ```
+    For tyre lock up to trigger, one must have vehicle speed up to 50 MpH (Above it and the lock up won't happen), is not in tutorial mode, is not retired (<code>isOutOfRace</code>), is not chequered flag, and must ready to lockup. The last one (<code>IsReadyTo</code>) is calculated based on 'stress' point that will incremented overtime. Once it exceed over 1000, then <code>IsReadyTo</code> will return <code>true</code>.
     ##### VANILLA TWEAK
     ```c#
     float brakingSkill = 20f - inVehicle.driver.GetDriverStats().braking;
