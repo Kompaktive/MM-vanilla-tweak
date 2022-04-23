@@ -43,16 +43,16 @@ Motorsport Manager Vanilla Tweak
     bool flag = Game.instance.sessionManager.flag == SessionManager.Flag.Chequered;
     return inVehicle.speed <= GameUtility.MilesPerHourToMetersPerSecond(50f) && !isTutorialActiveInCurrentGameState && !inVehicle.behaviourManager.isOutOfRace && !flag && inVehicle.sessionEvents.IsReadyTo(SessionEvents.EventType.LockUp);
     ```
-    For tyre lock up to trigger, one must have vehicle speed up to 50 MpH (Above it and the lock up won't happen), is not in tutorial mode, is not retired (<code>isOutOfRace</code>), is not chequered flag, and must ready to lockup. The last one (<code>IsReadyTo</code>) is calculated based on 'stress' point that will incremented overtime. Once it exceed over 1000, then <code>IsReadyTo</code> will return <code>true</code>.
     ##### VANILLA TWEAK
     ```c#
+    float focusSkill = 20f - inVehicle.driver.GetDriverStats().focus;
     float brakingSkill = 20f - inVehicle.driver.GetDriverStats().braking;
     float fitnessSkill = (Game.instance.sessionManager.GetNormalizedSessionTime() * 20f) - inVehicle.driver.GetDriverStats().fitness;
     float corneringSkill = 40f - inVehicle.driver.GetDriverStats().cornering - (Game.instance.sessionManager.currentSessionWeather.GetNormalizedTrackRubber() * 20f);
     float adaptabilitySkill = (Game.instance.sessionManager.currentSessionWeather.GetNormalizedTrackWater() * 20f) - inVehicle.driver.GetDriverStats().adaptability;
 
     float minSpeedToTriggerLockUp = (inVehicle.driver.GetDriverStats().braking * 0.75f) + (inVehicle.driver.GetDriverStats().cornering * 0.75f) + (Game.instance.sessionManager.currentSessionWeather.GetNormalizedTrackRubber() * 10f) - (Game.instance.sessionManager.currentSessionWeather.GetNormalizedTrackWater() * 10f);
-    float lockUpChanceThreshold = (brakingSkill + fitnessSkill + adaptabilitySkill + corneringSkill) / 1000f;
+    float lockUpChanceThreshold = (focusSkill + brakingSkill + fitnessSkill + adaptabilitySkill + corneringSkill) / 1000f;
     // change the 1000f to something else. The greater the value the less tyre lock up chance to trigger.
 
     bool isTutorialActiveInCurrentGameState = Game.instance.tutorialSystem.isTutorialActiveInCurrentGameState;
@@ -61,7 +61,6 @@ Motorsport Manager Vanilla Tweak
   
     return inVehicle.speed >= GameUtility.MilesPerHourToMetersPerSecond(minSpeedToTriggerLockUp) && !isTutorialActiveInCurrentGameState && !inVehicle.behaviourManager.isOutOfRace && !flag && isLockUpTriggered;
     ```
-    In Vanilla Tweak, the minimum vehicle speed to trigger tyre lock up is changed to be more dynamic, calculated based on driver's braking and cornering skills, track rubber level, and track water level. <code>isReadyTo</code> is removed as well and replaced with <code>isLockUpTriggered</code>. <code>isLockUpTriggered</code> is calculated by driver's skill in braking, fitness, cornering, and adaptability. You don't have to worry about the formula, yes it is unreadable I know, however if you want to change the tyre lock up frequency, just change the line mentioned above the commented line or you can do experiment by making it from scratch.
 </details>
 
 <details>
@@ -106,10 +105,27 @@ Motorsport Manager Vanilla Tweak
     bool flag6 = (flag5 && flag4) || flag4;
     return flag2 && (flag6 || flag || flag3);
     ```
-    test
     ##### VANILLA TWEAK
     ```c#
-    TBD
+    SessionWeatherDetails currentSessionWeather = Game.instance.sessionManager.currentSessionWeather;
+    bool flag = inVehicle.setup.tyreSet.GetTread() != SessionStrategy.GetRecommendedTreadRightNow() && RandomUtility.GetRandom01() < 0.1f;
+    bool flag2 = Game.instance.sessionManager.flag == SessionManager.Flag.Green;
+
+    float focusSkill = 20f - inVehicle.driver.GetDriverStats().focus;
+    float corneringSkill = 40f - inVehicle.driver.GetDriverStats().cornering - (Game.instance.sessionManager.currentSessionWeather.GetNormalizedTrackRubber() * 20f);
+    float brakingSkill = 20f - inVehicle.driver.GetDriverStats().braking;
+    float fitnessSkill = (Game.instance.sessionManager.GetNormalizedSessionTime() * 20f) - inVehicle.driver.GetDriverStats().fitness;
+    float adaptabilitySkill = (Game.instance.sessionManager.currentSessionWeather.GetNormalizedTrackWater() * 20f) - inVehicle.driver.GetDriverStats().adaptability;
+    float pressureFromAhead = 20f - (inVehicle.timer.gapToAhead * 10f);
+    float pressureFromBehind = 20f - (inVehicle.timer.gapToBehind * 10f);
+    if (inVehicle.timer.gapToAhead > 2f)
+      pressureFromAhead = 0f;
+    if (inVehicle.timer.gapToBehind > 2f)
+      pressureFromBehind = 0f;
+    float runningWideChanceThreshold = (focusSkill + corneringSkill + brakingSkill + fitnessSkill + adaptabilitySkill + pressureFromAhead + pressureFromBehind) / 1000f;
+
+    bool isRunningWideTriggered = RandomUtility.GetRandom01() < runningWideChanceThreshold;
+
+    return flag2 && (flag || isRunningWideTriggered);
     ```
-    test
 </details>
