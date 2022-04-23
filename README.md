@@ -110,7 +110,7 @@ Motorsport Manager Vanilla Tweak
     if (this.mCooldown >= 0) return false;
   
     SessionWeatherDetails currentSessionWeather = Game.instance.sessionManager.currentSessionWeather;
-    bool flag = inVehicle.setup.tyreSet.GetTread() != SessionStrategy.GetRecommendedTreadRightNow() && RandomUtility.GetRandom01() < 0.1f;
+    bool flag = inVehicle.setup.tyreSet.GetTread() != SessionStrategy.GetRecommendedTreadRightNow() && RandomUtility.GetRandom01() < 0.01f;
     bool flag2 = Game.instance.sessionManager.flag == SessionManager.Flag.Green;
 
     float focusSkill = 20f - inVehicle.driver.GetDriverStats().focus;
