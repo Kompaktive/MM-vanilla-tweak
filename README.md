@@ -63,3 +63,55 @@ Motorsport Manager Vanilla Tweak
     ```
     In Vanilla Tweak, the minimum vehicle speed to trigger tyre lock up is changed to be more dynamic, calculated based on driver's braking and cornering skills, track rubber level, and track water level. <code>isReadyTo</code> is removed as well and replaced with <code>isLockUpTriggered</code>. <code>isLockUpTriggered</code> is calculated by driver's skill in braking, fitness, cornering, and adaptability. You don't have to worry about the formula, yes it is unreadable I know, however if you want to change the tyre lock up frequency, just change the line mentioned above the commented line or you can do experiment by making it from scratch.
 </details>
+
+<details>
+  <summary>RunningWideDirector</summary>
+  
+  * #### OnSessionStarting()
+    Affects -
+    ##### DEFAULT VALUE
+    ```c#
+    int k = RandomUtility.GetRandom(0, 2);
+    ```
+    ##### VANILLA TWEAK
+    ```c#
+    int k = RandomUtility.GetRandom(-3, 5);
+    if (Game.instance.sessionManager.currentSessionWeather.GetNormalizedTrackWater() > 0.3f)
+      k = RandomUtility.GetRandom(0, 5);
+    ```
+  * #### CanRunWide()
+    Determines whether the subject is valid to run wide given it checks all the conditions.
+    ##### DEFAULT VALUE
+    -
+    ```c#
+    if (RandomUtility.GetRandom01() < (float)this.mRunWidePathUseCount[inPath.pathID] / 3f)
+    {
+      return false;
+    }
+    bool flag = inVehicle.setup.tyreSet.GetTread() != SessionStrategy.GetRecommendedTreadRightNow() && RandomUtility.GetRandom01() < 0.1f;
+    if (this.mActiveRunWideChunk.runWideCount <= 0 || this.mCooldown >= 0f)
+    {
+      return false;
+    }
+    if (Game.instance.sessionManager.eventDetails.currentSession.sessionType == SessionDetails.SessionType.Qualifying)
+    {
+      return flag;
+    }
+    float t = inVehicle.driver.GetDriverStats().focus / 20f;
+    float num = Mathf.Lerp(1.5f, 2f, t);
+    SessionWeatherDetails currentSessionWeather = Game.instance.sessionManager.currentSessionWeather;
+    bool flag2 = Game.instance.sessionManager.flag == SessionManager.Flag.Green;
+    bool flag3 = currentSessionWeather.GetNormalizedTrackWater() > 0.5f && currentSessionWeather.GetNormalizedRain() > 0.2f;
+    bool flag4 = inVehicle.timer.gapToAhead > 0.1f && inVehicle.timer.gapToAhead < num;
+    bool flag5 = inVehicle.timer.gapToBehind > 0.1f && inVehicle.timer.gapToBehind < num;
+    bool flag6 = (flag5 && flag4) || flag4;
+    return flag2 && (flag6 || flag || flag3);
+    ```
+    ##### VANILLA TWEAK
+    -
+    ```c#
+    int k = RandomUtility.GetRandom(-3, 5);
+    if (Game.instance.sessionManager.currentSessionWeather.GetNormalizedTrackWater() > 0.3f)
+      k = RandomUtility.GetRandom(0, 5);
+    ```
+</details>
