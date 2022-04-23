@@ -107,6 +107,8 @@ Motorsport Manager Vanilla Tweak
     ```
     ##### VANILLA TWEAK
     ```c#
+    if (this.mCooldown >= 0) return false;
+  
     SessionWeatherDetails currentSessionWeather = Game.instance.sessionManager.currentSessionWeather;
     bool flag = inVehicle.setup.tyreSet.GetTread() != SessionStrategy.GetRecommendedTreadRightNow() && RandomUtility.GetRandom01() < 0.1f;
     bool flag2 = Game.instance.sessionManager.flag == SessionManager.Flag.Green;
@@ -118,9 +120,9 @@ Motorsport Manager Vanilla Tweak
     float adaptabilitySkill = (Game.instance.sessionManager.currentSessionWeather.GetNormalizedTrackWater() * 20f) - inVehicle.driver.GetDriverStats().adaptability;
     float pressureFromAhead = 20f - (inVehicle.timer.gapToAhead * 10f);
     float pressureFromBehind = 20f - (inVehicle.timer.gapToBehind * 10f);
-    if (inVehicle.timer.gapToAhead > 2f)
+    if (inVehicle.timer.gapToAhead > 2f || Game.instance.sessionManager.eventDetails.currentSession.sessionType != SessionDetails.SessionType.Race)
       pressureFromAhead = 0f;
-    if (inVehicle.timer.gapToBehind > 2f)
+    if (inVehicle.timer.gapToBehind > 2f || Game.instance.sessionManager.eventDetails.currentSession.sessionType != SessionDetails.SessionType.Race)
       pressureFromBehind = 0f;
     float runningWideChanceThreshold = (focusSkill + corneringSkill + brakingSkill + fitnessSkill + adaptabilitySkill + pressureFromAhead + pressureFromBehind) / 1000f;
 
