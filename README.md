@@ -52,7 +52,7 @@ Motorsport Manager Vanilla Tweak
     float adaptabilitySkill = (Game.instance.sessionManager.currentSessionWeather.GetNormalizedTrackWater() * 20f) - inVehicle.driver.GetDriverStats().adaptability;
 
     float minSpeedToTriggerLockUp = (inVehicle.driver.GetDriverStats().braking * 0.75f) + (inVehicle.driver.GetDriverStats().cornering * 0.75f) + (Game.instance.sessionManager.currentSessionWeather.GetNormalizedTrackRubber() * 10f) - (Game.instance.sessionManager.currentSessionWeather.GetNormalizedTrackWater() * 10f);
-    float lockUpChanceThreshold = (focusSkill + brakingSkill + fitnessSkill + adaptabilitySkill + corneringSkill) / 1500f;
+    float lockUpChanceThreshold = (focusSkill + brakingSkill + fitnessSkill + adaptabilitySkill + corneringSkill) / 2000f;
     // change the 1000f to something else. The greater the value the less tyre lock up chance to trigger.
 
     bool isTutorialActiveInCurrentGameState = Game.instance.tutorialSystem.isTutorialActiveInCurrentGameState;
