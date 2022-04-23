@@ -6,11 +6,11 @@ Motorsport Manager Vanilla Tweak
   
   * #### weightStrippedReliabilityMin
     Affects AI Team's weight stripping behavior relating to minimum reliability. In vanilla, the value is <code>0.5f</code> which means AI Team will weight strip their car parts down to 50% reliability, which is a very risky move. This mod changes it to <code>0.7f</code> to make sure they strip their car parts down to 70% only.
-    ### DEFAULT VALUE
+    ###### DEFAULT VALUE
     ```c#
     public const float weightStrippedReliabilityMin = 0.5f;
     ```
-    ### VANILLA TWEAK
+    ###### VANILLA TWEAK
     ```c#
     public const float weightStrippedReliabilityMin = 0.7f;
     ```
@@ -22,11 +22,11 @@ Motorsport Manager Vanilla Tweak
   * #### CalculateLockUpZones()
     Affects how long in meters(?) the straight path is to enable the lock up zones. The default value is <code>400f</code> so if the straight path is less than 400 meters(?) then the lock up zones won't generate which means no driver will lock up in that spot. This mod changes it to <code>200f</code> so more lock up zones can be generated for each end of the straight path.
     ###### (?) = need confirmation
-    ### DEFAULT VALUE
+    ###### DEFAULT VALUE
     ```c#
     float num = 400f;
     ```
-    ### VANILLA TWEAK
+    ###### VANILLA TWEAK
     ```c#
     float num = 200f;
     ```
@@ -37,13 +37,13 @@ Motorsport Manager Vanilla Tweak
   
   * #### IsTyreLockUpViable()
     Affects when tyre lock up can trigger to each vehicle. For tyre lock up to happen, the function must return <code>true</code> .
-    ### DEFAULT VALUE
+    ###### DEFAULT VALUE
     ```c#
     bool isTutorialActiveInCurrentGameState = Game.instance.tutorialSystem.isTutorialActiveInCurrentGameState;
     bool flag = Game.instance.sessionManager.flag == SessionManager.Flag.Chequered;
     return inVehicle.speed <= GameUtility.MilesPerHourToMetersPerSecond(50f) && !isTutorialActiveInCurrentGameState && !inVehicle.behaviourManager.isOutOfRace && !flag && inVehicle.sessionEvents.IsReadyTo(SessionEvents.EventType.LockUp);
     ```
-    ### VANILLA TWEAK
+    ###### VANILLA TWEAK
     ```c#
     float focusSkill = 20f - inVehicle.driver.GetDriverStats().focus;
     float brakingSkill = 20f - inVehicle.driver.GetDriverStats().braking;
@@ -68,11 +68,11 @@ Motorsport Manager Vanilla Tweak
   
   * #### OnSessionStarting()
     Affects -
-    ### DEFAULT VALUE
+    ###### DEFAULT VALUE
     ```c#
     int k = RandomUtility.GetRandom(0, 2);
     ```
-    ### VANILLA TWEAK
+    ###### VANILLA TWEAK
     ```c#
     int k = RandomUtility.GetRandom(-3, 5);
     if (Game.instance.sessionManager.currentSessionWeather.GetNormalizedTrackWater() > 0.3f)
@@ -80,7 +80,7 @@ Motorsport Manager Vanilla Tweak
     ```
   * #### CanRunWide()
     Determines whether the subject is valid to run wide given it checks all the conditions.
-    ### DEFAULT VALUE
+    ###### DEFAULT VALUE
     ```c#
     if (RandomUtility.GetRandom01() < (float)this.mRunWidePathUseCount[inPath.pathID] / 3f)
     {
@@ -105,7 +105,7 @@ Motorsport Manager Vanilla Tweak
     bool flag6 = (flag5 && flag4) || flag4;
     return flag2 && (flag6 || flag || flag3);
     ```
-    ### VANILLA TWEAK
+    ###### VANILLA TWEAK
     ```c#
     if (this.mCooldown >= 0) return false;
   
@@ -132,12 +132,12 @@ Motorsport Manager Vanilla Tweak
     ```
   * #### VehicleSetBehaviour()
     Affects -
-    ### DEFAULT VALUE
+    ###### DEFAULT VALUE
     ```c#
     this.mCooldown = 60f;
     this.mRunWidePathUseCount[inPath.pathID]++;
     ```
-    ### VANILLA TWEAK
+    ###### VANILLA TWEAK
     ```c#
     float focusSkill = inVehicle.driver.GetDriverStats().focus;
     this.mCooldown = focusSkill * 3f;
