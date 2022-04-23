@@ -109,9 +109,7 @@ Motorsport Manager Vanilla Tweak
     test
     ##### VANILLA TWEAK
     ```c#
-    int k = RandomUtility.GetRandom(-3, 5);
-    if (Game.instance.sessionManager.currentSessionWeather.GetNormalizedTrackWater() > 0.3f)
-      k = RandomUtility.GetRandom(0, 5);
+    TBD
     ```
     test
 </details>
