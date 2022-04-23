@@ -82,7 +82,6 @@ Motorsport Manager Vanilla Tweak
   * #### CanRunWide()
     Determines whether the subject is valid to run wide given it checks all the conditions.
     ##### DEFAULT VALUE
-    -
     ```c#
     if (RandomUtility.GetRandom01() < (float)this.mRunWidePathUseCount[inPath.pathID] / 3f)
     {
@@ -107,11 +106,12 @@ Motorsport Manager Vanilla Tweak
     bool flag6 = (flag5 && flag4) || flag4;
     return flag2 && (flag6 || flag || flag3);
     ```
+    test
     ##### VANILLA TWEAK
-    -
     ```c#
     int k = RandomUtility.GetRandom(-3, 5);
     if (Game.instance.sessionManager.currentSessionWeather.GetNormalizedTrackWater() > 0.3f)
       k = RandomUtility.GetRandom(0, 5);
     ```
+    test
 </details>
