@@ -124,7 +124,7 @@ Motorsport Manager Vanilla Tweak
       pressureFromAhead = 0f;
     if (inVehicle.timer.gapToBehind > 2f || Game.instance.sessionManager.eventDetails.currentSession.sessionType != SessionDetails.SessionType.Race)
       pressureFromBehind = 0f;
-    float runningWideChanceThreshold = (focusSkill + corneringSkill + brakingSkill + fitnessSkill + adaptabilitySkill + pressureFromAhead + pressureFromBehind) / 1000f;
+    float runningWideChanceThreshold = (focusSkill + corneringSkill + brakingSkill + fitnessSkill + adaptabilitySkill + pressureFromAhead + pressureFromBehind) / 50000f;
 
     bool isRunningWideTriggered = RandomUtility.GetRandom01() < runningWideChanceThreshold;
 
